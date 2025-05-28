@@ -186,10 +186,9 @@ const Navbar: React.FC = () => {
                   <NavLink
                     to={link.path}
                     className={({ isActive }) =>
-                      `px-4 py-2 rounded-md text-md font-medium transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-white ${
-                        isActive
-                          ? "text-white bg-primary-800/70"
-                          : "text-white/90 hover:text-white hover:bg-primary-800/40"
+                      `px-4 py-2 rounded-md text-md font-medium transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-white ${isActive
+                        ? "text-white bg-primary-800/70"
+                        : "text-white/90 hover:text-white hover:bg-primary-800/40"
                       }`
                     }
                     onClick={(e) => {
@@ -202,9 +201,8 @@ const Navbar: React.FC = () => {
                     {link.name}
                     {link.submenu && (
                       <ChevronDown
-                        className={`w-4 h-4 ml-1 transition-transform ${
-                          activeDropdown === link.name ? "rotate-180" : ""
-                        }`}
+                        className={`w-4 h-4 ml-1 transition-transform ${activeDropdown === link.name ? "rotate-180" : ""
+                          }`}
                       />
                     )}
                   </NavLink>
@@ -226,10 +224,9 @@ const Navbar: React.FC = () => {
                             <NavLink
                               to={sublink.path}
                               className={({ isActive }) =>
-                                `block px-4 py-2 text-sm ${
-                                  isActive
-                                    ? "bg-primary-50 text-primary-700 font-medium"
-                                    : "text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                                `block px-4 py-2 text-sm ${isActive
+                                  ? "bg-primary-50 text-primary-700 font-medium"
+                                  : "text-gray-700 hover:bg-primary-50 hover:text-primary-600"
                                 } transition-colors flex justify-between items-center`
                               }
                               onMouseEnter={() =>
@@ -258,12 +255,12 @@ const Navbar: React.FC = () => {
                                 animate={{
                                   opacity:
                                     activeDropdown ===
-                                    `${link.name}-${sublink.name}`
+                                      `${link.name}-${sublink.name}`
                                       ? 1
                                       : 0,
                                   x:
                                     activeDropdown ===
-                                    `${link.name}-${sublink.name}`
+                                      `${link.name}-${sublink.name}`
                                       ? 0
                                       : 10,
                                 }}
@@ -284,10 +281,9 @@ const Navbar: React.FC = () => {
                                     key={subSubLink.path}
                                     to={subSubLink.path}
                                     className={({ isActive }) =>
-                                      `block px-4 py-2 text-sm ${
-                                        isActive
-                                          ? "bg-primary-50 text-primary-700 font-medium"
-                                          : "text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                                      `block px-4 py-2 text-sm ${isActive
+                                        ? "bg-primary-50 text-primary-700 font-medium"
+                                        : "text-gray-700 hover:bg-primary-50 hover:text-primary-600"
                                       } transition-colors`
                                     }
                                   >
@@ -335,17 +331,15 @@ const Navbar: React.FC = () => {
                     <>
                       <button
                         onClick={() => toggleDropdown(link.name)}
-                        className={`w-full flex justify-between items-center px-4 py-3 text-base font-medium ${
-                          activeDropdown === link.name
+                        className={`w-full flex justify-between items-center px-4 py-3 text-base font-medium ${activeDropdown === link.name
                             ? "text-primary-700 bg-primary-50"
                             : "text-neutral-700 hover:text-primary-600 hover:bg-primary-50"
-                        }`}
+                          }`}
                       >
                         {link.name}
                         <ChevronDown
-                          className={`w-5 h-5 transition-transform ${
-                            activeDropdown === link.name ? "rotate-180" : ""
-                          }`}
+                          className={`w-5 h-5 transition-transform ${activeDropdown === link.name ? "rotate-180" : ""
+                            }`}
                         />
                       </button>
 
@@ -372,62 +366,59 @@ const Navbar: React.FC = () => {
                                             `${link.name}-${sublink.name}`
                                           )
                                         }
-                                        className={`w-full flex justify-between items-center px-4 py-2 text-sm font-medium ${
-                                          activeDropdown ===
-                                          `${link.name}-${sublink.name}`
+                                        className={`w-full flex justify-between items-center px-4 py-2 text-sm font-medium ${activeDropdown ===
+                                            `${link.name}-${sublink.name}`
                                             ? "text-primary-700 bg-primary-50"
                                             : "text-neutral-700 hover:text-primary-600 hover:bg-primary-50"
-                                        }`}
+                                          }`}
                                       >
                                         {sublink.name}
                                         <ChevronDown
-                                          className={`w-4 h-4 transition-transform ${
-                                            activeDropdown ===
-                                            `${link.name}-${sublink.name}`
+                                          className={`w-4 h-4 transition-transform ${activeDropdown ===
+                                              `${link.name}-${sublink.name}`
                                               ? "rotate-180"
                                               : ""
-                                          }`}
+                                            }`}
                                         />
                                       </button>
 
                                       <AnimatePresence>
                                         {activeDropdown ===
                                           `${link.name}-${sublink.name}` && (
-                                          <motion.div
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{
-                                              opacity: 1,
-                                              height: "auto",
-                                            }}
-                                            exit={{ opacity: 0, height: 0 }}
-                                            transition={{ duration: 0.15 }}
-                                            className="bg-gray-100 overflow-hidden"
-                                          >
-                                            <div className="py-1 pl-8">
-                                              {sublink.submenu.map(
-                                                (subSubLink) => (
-                                                  <NavLink
-                                                    key={subSubLink.path}
-                                                    to={subSubLink.path}
-                                                    className="block px-4 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50"
-                                                  >
-                                                    {subSubLink.name}
-                                                  </NavLink>
-                                                )
-                                              )}
-                                            </div>
-                                          </motion.div>
-                                        )}
+                                            <motion.div
+                                              initial={{ opacity: 0, height: 0 }}
+                                              animate={{
+                                                opacity: 1,
+                                                height: "auto",
+                                              }}
+                                              exit={{ opacity: 0, height: 0 }}
+                                              transition={{ duration: 0.15 }}
+                                              className="bg-gray-100 overflow-hidden"
+                                            >
+                                              <div className="py-1 pl-8">
+                                                {sublink.submenu.map(
+                                                  (subSubLink) => (
+                                                    <NavLink
+                                                      key={subSubLink.path}
+                                                      to={subSubLink.path}
+                                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50"
+                                                    >
+                                                      {subSubLink.name}
+                                                    </NavLink>
+                                                  )
+                                                )}
+                                              </div>
+                                            </motion.div>
+                                          )}
                                       </AnimatePresence>
                                     </>
                                   ) : (
                                     <NavLink
                                       to={sublink.path}
                                       className={({ isActive }) =>
-                                        `block px-4 py-2 text-sm ${
-                                          isActive
-                                            ? "text-primary-700 font-medium bg-primary-50"
-                                            : "text-gray-700 hover:text-primary-600 hover:bg-primary-50"
+                                        `block px-4 py-2 text-sm ${isActive
+                                          ? "text-primary-700 font-medium bg-primary-50"
+                                          : "text-gray-700 hover:text-primary-600 hover:bg-primary-50"
                                         }`
                                       }
                                     >
@@ -445,10 +436,9 @@ const Navbar: React.FC = () => {
                     <NavLink
                       to={link.path}
                       className={({ isActive }) =>
-                        `block px-4 py-3 text-base font-medium ${
-                          isActive
-                            ? "text-primary-700 bg-primary-50"
-                            : "text-neutral-700 hover:text-primary-600 hover:bg-primary-50"
+                        `block px-4 py-3 text-base font-medium ${isActive
+                          ? "text-primary-700 bg-primary-50"
+                          : "text-neutral-700 hover:text-primary-600 hover:bg-primary-50"
                         }`
                       }
                     >
