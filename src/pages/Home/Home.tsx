@@ -24,7 +24,7 @@ const Home: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <Hero />
-      <Features />
+      {/* <Features /> */}
       <NotificationMarquee />
       <NEIEAIntro/>
       <AboutUs/>
