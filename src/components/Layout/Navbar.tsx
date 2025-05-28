@@ -96,32 +96,32 @@ const Navbar: React.FC = () => {
       {
         name: "Courses",
         path: "/courses",
-        submenu: [
-          {
-            name: "Foundational English Course",
-            path: "/foundational-english-course",
-          },
-          {
-            name: "English Beginner's Level Course",
-            path: "/english-beginners-level-course",
-          },
-          {
-            name: "English Proficiency Course",
-            path: "/english-proficiency-course-2",
-          },
-          {
-            name: "NIOS English",
-            path: "/nios-secondary-examinations-preparatory-course",
-          },
-          { name: "NIOS Math", path: "/nios-math" },
-          { name: "Foundation Maths Course", path: "/foundation-maths-course" },
-          {
-            name: "Technical Training",
-            path: "/technical-training",
-          },
-          { name: "Testimonials", path: "/testimonials" },
-          { name: "Activities", path: "/activities" },
-        ],
+        // submenu: [
+        //   {
+        //     name: "Foundational English Course",
+        //     path: "/foundational-english-course",
+        //   },
+        //   {
+        //     name: "English Beginner's Level Course",
+        //     path: "/english-beginners-level-course",
+        //   },
+        //   {
+        //     name: "English Proficiency Course",
+        //     path: "/english-proficiency-course-2",
+        //   },
+        //   {
+        //     name: "NIOS English",
+        //     path: "/nios-secondary-examinations-preparatory-course",
+        //   },
+        //   { name: "NIOS Math", path: "/nios-math" },
+        //   { name: "Foundation Maths Course", path: "/foundation-maths-course" },
+        //   {
+        //     name: "Technical Training",
+        //     path: "/technical-training",
+        //   },
+        //   { name: "Testimonials", path: "/testimonials" },
+        //   { name: "Activities", path: "/activities" },
+        // ],
       },
       { name: "Sponsorship", path: "/sponsorship" },
     ],
