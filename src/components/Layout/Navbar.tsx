@@ -308,7 +308,7 @@ const Navbar: React.FC = () => {
             {/* Desktop CTA Button */}
             <div className="hidden lg:flex items-center ml-4">
               <Link to="/donate" className="btn-accent ">
-                Donate Now
+                Donate
               </Link>
             </div>
           </div>
@@ -461,7 +461,7 @@ const Navbar: React.FC = () => {
               {/* Mobile CTA Button */}
               <div className="px-4 py-3">
                 <Link to="/donate" className="btn-accent">
-                  Donate Now
+                  Donate
                 </Link>
               </div>
             </div>
