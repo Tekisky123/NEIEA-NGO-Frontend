@@ -74,6 +74,11 @@ const Footer: React.FC = () => {
                   {t('nav.careers')}
                 </Link>
               </li>
+              <li>
+                <Link to="/admin/login" className="text-neutral-300 hover:text-primary-400 transition-colors">
+                  Login
+                </Link>
+              </li>
             </ul>
           </div>
 

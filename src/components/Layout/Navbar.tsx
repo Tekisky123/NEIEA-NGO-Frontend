@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../../images/Logo.png";
+import logo from "../../images/logo2.png";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const navbarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
@@ -17,20 +15,6 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
     setActiveDropdown(null);
   }, [location.pathname]);
-
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -49,35 +33,42 @@ const Navbar: React.FC = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    if (isOpen) {
-      setActiveDropdown(null);
-    }
+    if (isOpen) setActiveDropdown(null);
   };
 
   const handleDropdownHover = (dropdownName: string) => {
-    if (hoverTimeout) clearTimeout(hoverTimeout);
     setActiveDropdown(dropdownName);
   };
 
-  const handleDropdownLeave = () => {
-    const timeout = setTimeout(() => {
+  const handleDropdownLeave = (dropdownName: string) => {
+    if (!dropdownName.includes("-")) {
       setActiveDropdown(null);
-    }, 200); // Reduced delay for better UX
-    setHoverTimeout(timeout);
+    }
   };
 
   const toggleDropdown = (dropdownName: string) => {
-    if (activeDropdown === dropdownName) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdownName);
-    }
+    setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
   };
 
   // Nav data
   const navData = {
     main: [
       { name: "Home", path: "/" },
+      {
+        name: "Our Work",
+        path: "/our-work",
+        submenu: [
+          {
+            name: "Introduction and Working",
+            path: "/neieaintroduction-and-working",
+          },
+          { name: "Our Story", path: "/about-us" },
+          { name: "History", path: "/history" },
+          { name: "Vision and Mission", path: "/mission-and-vision" },
+          { name: "Leaders", path: "/leaders-of-neiea" },
+          { name: "Team Leaders", path: "/team-leaders" },
+        ],
+      },
       {
         name: "About Us",
         path: "/about",
@@ -94,146 +85,59 @@ const Navbar: React.FC = () => {
         ],
       },
       {
-        name: "NEIEA Working",
-        path: "/working",
+        name: "Take Action",
+        path: "/take-action",
         submenu: [
-          {
-            name: "Blended Learning",
-            path: "/the-blended-learning-mode-teaching",
-          },
-          { name: "Technology", path: "/mooc-technology-2" },
-          {
-            name: "DOP",
-            path: "/dop",
-            submenu: [
-              { name: "DOP", path: "/dop-5" },
-              { name: "Zoom Lectures", path: "/zoom-lectures" },
-            ],
-          },
-          { name: "Teacher's Training", path: "/teachers-training" },
+          { name: "Volunteer", path: "/volunteer" },
+          { name: "Advocate", path: "/advocate" },
+          { name: "Fundraise", path: "/fundraise" },
         ],
       },
       {
-        name: "Course Offerings",
+        name: "Courses",
         path: "/courses",
-        submenu: [
-          {
-            name: "Foundational English Course",
-            path: "/foundational-english-course",
-          },
-          {
-            name: "English Beginner's Level Course",
-            path: "/english-beginners-level-course",
-          },
-          {
-            name: "English Proficiency Course",
-            path: "/english-proficiency-course-2",
-          },
-          {
-            name: "NIOS English",
-            path: "/nios-secondary-examinations-preparatory-course",
-          },
-          { name: "NIOS Math", path: "/nios-math" },
-          { name: "Foundation Maths Course", path: "/foundation-maths-course" },
-          {
-            name: "Technical Training",
-            path: "/technical-training",
-            submenu: [
-              {
-                name: "Microsoft Office Course for Beginners",
-                path: "/microsoft-office-course-for-beginners",
-              },
-              { name: "Technical Training", path: "/technical-training" },
-            ],
-          },
-          { name: "Testimonials", path: "/testimonials" },
-          { name: "Activities", path: "/activities" },
-        ],
+      
       },
-      {
-        name: "Our Programmes",
-        path: "/programmes",
-        submenu: [
-          { name: "Girl's Education", path: "/girl-education" },
-          { name: "Homeless Children", path: "/homeless-children" },
-          { name: "Slum Children", path: "/slum-children" },
-          {
-            name: "Public schools and Private schools",
-            path: "/public-schools-and-private-schools",
-          },
-          { name: "Dropout Students", path: "/dropout-students" },
-          { name: "Madarsa Education", path: "/madarsa-education-2" },
-        ],
-      },
-      { name: "Be The Change", path: "/change" },
-      { name: "NEI USA", path: "/usa" },
-      {
-        name: "Donation",
-        path: "/donation",
-        submenu: [
-          { name: "Donation", path: "/donation" },
-          { name: "Crowdfunding", path: "/crowdfunding-campaign" },
-        ],
-      },
-      { name: "Contact", path: "/contact" },
-      { name: "Blog", path: "/blog" },
-      {
-        name: "NEWS Media",
-        path: "/news-media",
-        submenu: [
-          { name: "NEWS Media", path: "/news-media" },
-          { name: "Gallery", path: "/gallery" },
-        ],
-      },
+      { name: "Sponsorship", path: "/sponsorship" },
     ],
-  };
-
-  // Check if a link has a submenu
-  const hasSubmenu = (linkName: string) => {
-    const link = navData.main.find((item) => item.name === linkName);
-    return link && link.submenu;
   };
 
   return (
     <header
       ref={navbarRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "shadow-lg" : ""
-      }`}
+      className={`sticky w-full top-0 z-50 transition-all duration-300 bg-white shadow-md`}
     >
-      {/* Top Section - Logo and Organization Name */}
-      <div
-        className={`bg-white transition-all duration-300 ${
-          scrolled ? "py-1" : "py-2"
-        }`}
-      >
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between">
-            <Link
-              to="/"
-              className="flex items-center space-x-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md"
-            >
-              <img
-                src={logo}
-                alt="NEIEA Logo"
-                className={`transition-all duration-300 ${
-                  scrolled ? "h-12" : "h-14"
-                }`}
-              />
-              <div className="hidden md:block">
-                <h1 className="text-lg font-bold text-gray-800">
-                  The New Equitable and Innovative
-                </h1>
-                <h2 className="text-lg font-bold text-primary-600">
-                  Educational Association (NEIEA)
-                </h2>
-              </div>
-            </Link>
+      {/* Logo and Organization Name - Centered and Prominent */}
+      <div className="container mx-auto p-1">
+        <div className="flex flex-col items-center text-center">
+          <Link
+            to="/"
+            className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md transition-all"
+          >
+            <img
+              src={logo}
+              alt="NEIEA Logo"
+              className={`transition-all duration-300 h-16 md:h-20`}
+            />
+            <div className="mt-2">
+              <h1 className="text-xl md:text-3xl font-bold text-start text-primary-600">
+                The New Equitable and Innovative Educational Association (NEIEA)
+              </h1>
+            </div>
+          </Link>
+        </div>
+      </div>
 
-            {/* Mobile Menu Button - Placed in top section for better visibility */}
+      {/* Navigation Bar */}
+      <div
+        className={`transition-all duration-300 py-1 bg-primary-700 shadow-md`}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className="lg:hidden p-2 rounded-md text-neutral-700 hover:text-primary-600 hover:bg-primary-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              className="lg:hidden p-2 rounded-md text-white hover:text-white hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
               aria-label="Toggle menu"
             >
               {isOpen ? (
@@ -242,47 +146,36 @@ const Navbar: React.FC = () => {
                 <Menu className="w-6 h-6" />
               )}
             </button>
-          </div>
-        </div>
-      </div>
 
-      {/* Bottom Section - Navigation */}
-      <div
-        className={`bg-primary-700 transition-all duration-300 ${
-          scrolled ? "py-1" : "py-2"
-        }`}
-      >
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between">
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1">
+            <nav className="hidden lg:flex items-center justify-center space-x-1 flex-1 py-3">
               {navData.main.map((link) => (
                 <div
                   key={link.name}
                   className="relative group"
                   onMouseEnter={() =>
-                    hasSubmenu(link.name) && handleDropdownHover(link.name)
+                    link.submenu && handleDropdownHover(link.name)
                   }
-                  onMouseLeave={handleDropdownLeave}
+                  onMouseLeave={() => handleDropdownLeave(link.name)}
                 >
                   <NavLink
                     to={link.path}
                     className={({ isActive }) =>
-                      `px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+                      `px-4 py-2 rounded-md text-md font-medium transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-white ${
                         isActive
-                          ? "text-white bg-primary-800/50"
-                          : "text-white/90 hover:text-white hover:bg-primary-800/30"
+                          ? "text-white bg-primary-800/70"
+                          : "text-white/90 hover:text-white hover:bg-primary-800/40"
                       }`
                     }
                     onClick={(e) => {
-                      if (hasSubmenu(link.name)) {
+                      if (link.submenu) {
                         e.preventDefault();
                         toggleDropdown(link.name);
                       }
                     }}
                   >
                     {link.name}
-                    {hasSubmenu(link.name) && (
+                    {link.submenu && (
                       <ChevronDown
                         className={`w-4 h-4 ml-1 transition-transform ${
                           activeDropdown === link.name ? "rotate-180" : ""
@@ -299,9 +192,9 @@ const Navbar: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-0 mt-1 w-56 bg-white rounded-lg shadow-xl py-2 z-20 border border-gray-100"
+                        className="absolute left-0 transform -translate-x-1/2 mt-1 min-w-[200px] bg-white rounded-lg shadow-xl py-2 z-20 border border-gray-100"
                         onMouseEnter={() => handleDropdownHover(link.name)}
-                        onMouseLeave={handleDropdownLeave}
+                        onMouseLeave={() => handleDropdownLeave(link.name)}
                       >
                         {link.submenu.map((sublink) => (
                           <div key={sublink.path} className="relative group">
@@ -313,6 +206,18 @@ const Navbar: React.FC = () => {
                                     ? "bg-primary-50 text-primary-700 font-medium"
                                     : "text-gray-700 hover:bg-primary-50 hover:text-primary-600"
                                 } transition-colors flex justify-between items-center`
+                              }
+                              onMouseEnter={() =>
+                                sublink.submenu &&
+                                handleDropdownHover(
+                                  `${link.name}-${sublink.name}`
+                                )
+                              }
+                              onMouseLeave={() =>
+                                sublink.submenu &&
+                                handleDropdownLeave(
+                                  `${link.name}-${sublink.name}`
+                                )
                               }
                             >
                               {sublink.name}
@@ -326,10 +231,28 @@ const Navbar: React.FC = () => {
                               <motion.div
                                 initial={{ opacity: 0, x: 10 }}
                                 animate={{
-                                  opacity: activeDropdown === link.name ? 1 : 0,
-                                  x: activeDropdown === link.name ? 0 : 10,
+                                  opacity:
+                                    activeDropdown ===
+                                    `${link.name}-${sublink.name}`
+                                      ? 1
+                                      : 0,
+                                  x:
+                                    activeDropdown ===
+                                    `${link.name}-${sublink.name}`
+                                      ? 0
+                                      : 10,
                                 }}
-                                className="absolute left-full top-0 ml-1 w-56 bg-white rounded-lg shadow-xl py-2 z-30 border border-gray-100"
+                                className="absolute left-full top-0 ml-1 min-w-[200px] bg-white rounded-lg shadow-xl py-2 z-30 border border-gray-100"
+                                onMouseEnter={() =>
+                                  handleDropdownHover(
+                                    `${link.name}-${sublink.name}`
+                                  )
+                                }
+                                onMouseLeave={() =>
+                                  handleDropdownLeave(
+                                    `${link.name}-${sublink.name}`
+                                  )
+                                }
                               >
                                 {sublink.submenu.map((subSubLink) => (
                                   <NavLink
@@ -357,12 +280,9 @@ const Navbar: React.FC = () => {
               ))}
             </nav>
 
-            {/* CTA Button */}
+            {/* Desktop CTA Button */}
             <div className="hidden lg:flex items-center ml-4">
-              <Link
-                to="/donate"
-                className="bg-white text-primary-700 hover:bg-gray-100 px-4 py-2 rounded-md text-sm font-medium transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-              >
+              <Link to="/donate" className="btn-accent ">
                 Donate Now
               </Link>
             </div>
@@ -386,7 +306,7 @@ const Navbar: React.FC = () => {
                   key={link.name}
                   className="border-b border-gray-100 last:border-0"
                 >
-                  {hasSubmenu(link.name) ? (
+                  {link.submenu ? (
                     <>
                       <button
                         onClick={() => toggleDropdown(link.name)}
@@ -414,7 +334,7 @@ const Navbar: React.FC = () => {
                             className="bg-gray-50 overflow-hidden"
                           >
                             <div className="py-1 pl-6">
-                              {link.submenu?.map((sublink) => (
+                              {link.submenu.map((sublink) => (
                                 <div
                                   key={sublink.path}
                                   className="border-b border-gray-100 last:border-0"
@@ -458,7 +378,7 @@ const Navbar: React.FC = () => {
                                             transition={{ duration: 0.15 }}
                                             className="bg-gray-100 overflow-hidden"
                                           >
-                                            <div className="py-1 pl-6">
+                                            <div className="py-1 pl-8">
                                               {sublink.submenu.map(
                                                 (subSubLink) => (
                                                   <NavLink
@@ -478,7 +398,13 @@ const Navbar: React.FC = () => {
                                   ) : (
                                     <NavLink
                                       to={sublink.path}
-                                      className="block px-4 py-2 text-sm text-gray-700 hover:text-primary-600 hover:bg-primary-50"
+                                      className={({ isActive }) =>
+                                        `block px-4 py-2 text-sm ${
+                                          isActive
+                                            ? "text-primary-700 font-medium bg-primary-50"
+                                            : "text-gray-700 hover:text-primary-600 hover:bg-primary-50"
+                                        }`
+                                      }
                                     >
                                       {sublink.name}
                                     </NavLink>
@@ -509,10 +435,7 @@ const Navbar: React.FC = () => {
 
               {/* Mobile CTA Button */}
               <div className="px-4 py-3">
-                <Link
-                  to="/donate"
-                  className="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-base font-medium transition-all shadow-md"
-                >
+                <Link to="/donate" className="btn-accent">
                   Donate Now
                 </Link>
               </div>

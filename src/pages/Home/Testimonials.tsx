@@ -7,6 +7,20 @@ import AnimatedSection from '../../components/UI/AnimatedSection';
 const Testimonials: React.FC = () => {
   const testimonials = [
     {
+      name: "Palak",
+      role: "Patiala, Punjab",
+      content:
+        "I want to share my experience with NEIEA, an online platform offering 100% free courses in subjects like English, Maths, and Science. I completed the foundational English course and truly enjoyed the classes. My mother and younger brother were so impressed by the teaching that they joined as well. Now, I’m pursuing the proficiency-level English course, which is also free. The teachers are cooperative, and NEIEA even provides certificates for their courses. I highly recommend NEIEA to everyone—it’s a great opportunity for learning!",
+      image: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    },
+    {
+      name: "Malik Khan",
+      role: "Karnataka",
+      content:
+        "I took an online course in NEIEA which is regarding spoken English and I was blown away by how much I learned. The instructor was engaging and knowledgeable, and the course material was presented in a clear and concise way. I loved the interactive activities that helped me solidify my understanding of the material. Overall, I would highly recommend this course to anyone looking to expand their communication skills.",
+      image: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    },
+    {
       name: "Priya Sharma",
       role: "Student, Girls Education Program",
       content: "The NEIEA program changed my life. I was about to drop out of school, but their support helped me continue my education. Now I'm preparing for college.",
